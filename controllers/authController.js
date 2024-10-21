@@ -131,6 +131,16 @@ exports.logout = (req, res) => {
   });
 };
 
+// RESTRICT PERMISSION
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(new AppError("Access denied", 403));
+    }
+    next();
+  };
+};
+
 // UPDATE PASSWORD
 exports.updatePassword = catchAsync(async (req, res, next) => {
   // 1) Get user from collection
