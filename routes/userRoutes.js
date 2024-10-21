@@ -14,4 +14,20 @@ router.use(authController.protect);
 
 router.patch("/updatePassword", authController.updatePassword);
 
+router.get(
+  "/getAllUsers",
+  authController.restrictTo("admin"),
+  userController.getAllUsers
+);
+
+router.get(
+  "/getOneUser/:id",
+  authController.restrictTo("admin"),
+  userController.getOneUser
+);
+
+router.get("/me", userController.getMe);
+
+router.patch("/updateMe", userController.updateMe);
+
 module.exports = router;
